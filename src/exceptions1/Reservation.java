@@ -14,21 +14,24 @@ public class Reservation {
 // para cada objeto reservation que a aplicação tiver, iremos precisar de apenas um.
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Reservation(Integer roomNumber, Date chekin, Date checkOut) {
+    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) {
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
 
     public Integer getRoomNumber() {
+
         return roomNumber;
     }
 
     public void setRoomNumber(Integer roomNumber) {
+
         this.roomNumber = roomNumber;
     }
 
     public Date getCheckIn() {
+
         return checkIn;
     }
 
@@ -58,7 +61,7 @@ public class Reservation {
                 +sdf.format(checkOut)
                 +", "
                 + duration()
-                +"nights ";
+                +" nights ";
 
     }
 
