@@ -1,4 +1,7 @@
-package exceptions1;
+package BadSolution;
+////https://github.com/acenelio/exceptions1-java
+//solução anteriot era muito ruim porque as validações estavam na app, o certo é saporra tá na classe Reservation,
+// porque dai migoo se ta delegando a loógica pra classe certa morow ,é nóis parça!
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,7 +10,7 @@ import java.util.Date;
 
 public class Program {
     public static void main(String[]args) throws ParseException {
-
+        Date now = new Date();
         Scanner in  = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         System.out.println("Room number");
@@ -20,7 +23,11 @@ public class Program {
         if(!checkOut.after(checkIn)){
             System.out.println("Error in reservation: Check-out date must be after Check-in date");
         }
-        else{
+
+        else if(checkIn.before(now) ||checkOut.before(now)) {
+            System.out.println( "Error in reservation: Reservation dates for update must be future dates");
+        }
+        else {
             Reservation reservation = new Reservation(number, checkIn, checkOut);
             System.out.println("Reservation: " + reservation);
 
@@ -31,19 +38,15 @@ public class Program {
             System.out.println("Check-out date (dd/MM/yyyy): ");
             checkOut = sdf.parse(in.next());
 
-            Date now = new Date();
-            if(checkIn.before(now) || checkOut.before(now)){
-                System.out.println("Error in reservation: Reservation dates for update must be future");
-            }
-            else if(!checkOut.after(checkIn)){
-                System.out.println("Error in reservation: Check-out date must be after check-in date ");
-            }
-            else {
-                reservation.updateDates(checkIn, checkOut);
+
+            String error = reservation.updateDates(checkIn, checkOut);
+            if (error != null) {
+                System.out.println("Error in reservation: " + error);
+            } else {
                 System.out.println("Reservation: " + reservation);
             }
         }
+            in.close();
 
-         in.close();
     }
 }
